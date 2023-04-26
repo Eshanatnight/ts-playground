@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "amd",
+		"esModuleInterop": true,
+		"outDir": "./",
+		"declarationDir": "./decl",
+		"noUnusedLocals": true,
+		"noImplicitReturns": true,
+		"allowUnreachableCode": false,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"sourceMap": true,
+		"declarationMap": true,
+		"declaration": true,
+		"pretty": true,
+	},
+	"exclude": [
+		"dist",
+		"node_modules"
+	],
+	"include": [
+		"scripts/**/*"
+	]
+}
