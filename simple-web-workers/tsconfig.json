@@ -10,9 +10,9 @@
 		"allowUnreachableCode": false,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"sourceMap": true,
 		"declarationMap": true,
 		"declaration": true,
+		"inlineSourceMap": true,
 		"pretty": true,
 	},
 	"exclude": [
