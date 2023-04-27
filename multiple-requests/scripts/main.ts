@@ -27,7 +27,3 @@ if (window.Worker && inOne && inTwo && result) {
 		throw err;
 	};
 }
-
-//function to register worker and call that function in loop
-//funcion reuturn promise parameter // insided promise woker , promise resolve worker return data
-//Promise.push // array // Promise.all() ; 
