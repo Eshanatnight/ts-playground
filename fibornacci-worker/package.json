@@ -1,15 +1,20 @@
 {
-  "name": "fibornacci-worker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "typescript": "^5.0.4"
-  }
+	"name": "fibornacci-worker",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "npx tsc",
+		"clean": "rimraf decl && rimraf --glob *.js && rimraf --glob *.js.map",
+		"build_clean": "npm run clean && npm run build",
+		"serve": "npm run build && npx serve"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"rimraf": "^5.0.0",
+		"serve": "^14.2.0",
+		"typescript": "^5.0.4"
+	}
 }
