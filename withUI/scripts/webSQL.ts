@@ -20,7 +20,7 @@ function SQLRowsToPersonArray(rows: SQLResultSetRowList): Person[] {
 }
 
 // Run a transaction to get the data from the database
-function getDateFromWebSQL(): void {
+function getDataFromWebSQL(): void {
 	webSQLDB.transaction(function (tx: SQLTransaction) {
 		tx.executeSql(
 			webSQLQuery,
@@ -37,7 +37,7 @@ if (webSQLShowButton) {
 	// ! this is taking a second to load after click of the button
 	// ! not sure why?
 	webSQLShowButton.addEventListener("click", () => {
-		getDateFromWebSQL();
+		getDataFromWebSQL();
 
 		let personArray: Person[] = SQLRowsToPersonArray(dataFromDB);
 

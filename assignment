@@ -1,0 +1,120 @@
+# Assignments
+
+## Two
+
+6. Each column in table should have edit/update and delete button.Same should be reflected in its corresponding DB.
+7. Give one more option to user that to move data from one DB to another and same should be reflected in UI (table) without page refresh.
+
+
+// Notes:
+Use proper DOM Manipulation so that page refersh wont be require.
+/on after reload proper data should come in UI
+For Design time or coding - Use variables with proper name , each method should perform particular task , use comment wherever required ,
+avoid code or method repetition / proper workspace / js doc
+
+
+## Three : Service Workers
+
+// Running everything on main thread might slow down UI operations.
+// So Background sync for offline application from client to server need to be done in worker thread.
+// Register one webworker.
+// Take user information such as name , age , email , gender store those data in WEB SQL. And Show Data In UI only from Web Sql.
+// After successfully storing of data in web sql pass those data to web worker.
+// In webworker access IndexDb and store data created or updated by user in index DB with status NEW
+---
+// Index DB Format:
+//     MessageId : auto increment type number or string
+//     Data: {name:string,age:string,email:string,gender:string}
+//     Status : Type String ,  value (NEW , PROCESSED , INCOMING(From Server to client))
+
+// Something along the lines of this:
+// data = {
+//     MessageId: 1,
+//     Data: {
+//         table: {
+//             name:string,
+//             age:string,
+//             email:string,
+//             gender:string
+//         },
+//         status: "NEW" | "PROCESSED" | "INCOMING"
+//     };
+// }
+//
+---
+
+
+// post call structure:
+//         {
+//                 ""FromServerToClient"":[IncomingData1,IncomingData2],
+//                 ""FromClientToServer"":[OutgoinData1,OutgoinData2],
+//                 ""ProcessedMessage_S"":[MessageIds], ////Array of message ids which is successfully processed in server
+//                 ""Recieved_C"":[MessageIds] , ////Array of message ids which is already recieved to clientds
+//         }
+
+// Here in above Incoming and Outgoing data is an object and its format: {messageId:""unique message Id"",data:{name:string,age:string,email:string,gender:string}}
+
+// Note - Incoming Request and Response format would be same as above . It just different data will be filled at each time.
+
+// In that server side take incoming data from client and save those data in file (Consider that file as database)
+
+// While Sending response from server check if any new data created in that file. (To create data run a program in every certain interval to create entry in that file)
+
+// If any new data is created then send those information to client as response of post call in the same above format (Data from server would be in FromServerToClient)
+//         and at the same time send message id of data's which is successfully written in file. (in ProcessMessage_S field )
+
+// Whatever data come from server store that data in indexDB as STATUS INCOMING . And whatever messageIDs coming in ProcessedMessage_S .Mark those message id status as PROCESSED in index DB
+
+// After saving those incoming data , Pass those data from worker to main thread from there save it into web sql.
+
+// After storing successfully in websql mark those data as PROCESSED in indexDB.
+
+//Same above type of format of index DB will be used in Server Side (In file ) . And above type of logic will have in server id
+
+// After every iteration check for status Processed In Index DB and deleted those messages.
+
+//Note - Iteration will happend util there is no data left in client index DB as new
+
+//make an API eg - sync()  which will called manually by user to take data from server side and update in websql . Same would be in UI as a button.
+
+
+
+//Example:
+
+//Post call 1 : -
+
+        postData = {
+                    ""FromServerToClient"":[{msgId:1,data:{""name"":""abc"",""age"":""22"",""gender"":""M"",""email"":""abc@gmail.com""}},{msgId:2,data:{""name"":""bcd"",""age"":""22"",""gender"":""M"",""email"":""bcd@gmail.com""}}],
+                    ""FromClientToServer"":[],
+                    ""ProcessedMessage_S"":[],
+                    ""Recieved_C"":[]
+            }
+
+//Response of post call 1 : -
+
+        responseData = {
+            ""FromServerToClient"":[],
+            ""FromClientToServer"":[{msgId:3,data:{""name"":""qrt"",""age"":""22"",""gender"":""M"",""email"":""qrt@gmail.com""}}],
+            ""ProcessedMessage_S"":[1,2],
+            ""Recieved_C"":[]
+        }
+
+//Post call 2 : -
+
+        postData = {
+            ""FromServerToClient"":[{msgId:4,data:{""name"":""zxa"",""age"":""22"",""gender"":""M"",""email"":""zxa@gmail.com""}}],
+            ""FromClientToServer"":[],
+            ""ProcessedMessage_S"":[],
+            ""Recieved_C"":[3]
+        }
+
+//Response of post call 2
+
+            responseData = {
+                ""FromServerToClient"":[],
+                ""FromClientToServer"":[],
+                ""ProcessedMessage_S"":[4],
+                ""Recieved_C"":[]
+            }
+
+"
