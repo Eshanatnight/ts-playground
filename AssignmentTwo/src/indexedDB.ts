@@ -1,0 +1,49 @@
+class IndexDB<T> {
+    private readonly dbName: string;
+    private readonly objectStoreName: string;
+    private readonly options;
+    constructor(dbName: string, objectStoreName: string, objectStoreOptions: any) {
+        this.dbName = dbName;
+        this.objectStoreName = objectStoreName;
+        this.options = objectStoreOptions;
+    }
+
+    private async getDB(): Promise<IDBDatabase> {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(this.dbName, 1);
+            request.onerror = (event: Event) => reject(event);
+            request.onsuccess = (event: Event) => resolve(request.result);
+            request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+                const db = request.result;
+                if(!db.objectStoreNames.contains(this.objectStoreName)) {
+                    db.createObjectStore(this.objectStoreName, this.options);
+                }
+            }
+        });
+    }
+
+    public async addData(data: T) {
+        const db: IDBDatabase = await this.getDB();
+        const tx: IDBTransaction = db.transaction(this.objectStoreName, 'readwrite');
+        const store: IDBObjectStore = tx.objectStore(this.objectStoreName);
+        store.add(data);
+        tx.oncomplete = () => db.close();
+    }
+
+    public async getData(): Promise<T[]> {
+        const db: IDBDatabase = await this.getDB();
+        const tx: IDBTransaction = db.transaction(this.objectStoreName, 'readonly');
+        const store: IDBObjectStore = tx.objectStore(this.objectStoreName);
+        const request: IDBRequest = store.getAll();
+        return new Promise((resolve, reject) => {
+            request.onerror = (event: Event) => reject(event);
+            request.onsuccess = (event: Event) => resolve(request.result);
+        });
+    }
+}
+
+function test() {
+    let idb = new IndexDB('test', 'test', {keyPath: 'id', autoIncrement: true});
+    idb.addData({name: 'test'});
+    idb.getData().then((data) => console.log(data));
+}

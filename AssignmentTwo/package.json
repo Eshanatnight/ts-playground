@@ -1,0 +1,27 @@
+{
+  "name": "assignmenttwo",
+  "version": "1.0.0",
+  "description": "",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/bundle.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "rimraf decl && rimraf --glob *.js && rimraf --glob *.js.map && rimraf node_modules",
+    "build_clean": "npm run clean && npm run build",
+    "serve": "npm run build && npx serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/websql": "^0.0.27",
+    "rimraf": "^5.0.0",
+    "serve": "^14.2.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "requirejs": "^2.3.6"
+  }
+}

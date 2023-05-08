@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+        "lib": ["ES5", "DOM"],
+		"module": "AMD",
+		"esModuleInterop": true,
+		"outDir": "./dist",
+		"declarationDir": "./decl",
+		"noUnusedLocals": true,
+		"noImplicitReturns": true,
+		"allowUnreachableCode": false,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"declarationMap": true,
+		"declaration": true,
+		"sourceMap": true,
+		"pretty": true,
+	},
+	"exclude": [
+		"dist",
+		"node_modules"
+	],
+	"include": [
+		"src/**/*"
+	]
+}
