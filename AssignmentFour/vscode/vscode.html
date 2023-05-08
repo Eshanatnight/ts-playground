@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" con />
+		<title>Cat Coding</title>
+	</head>
+	<body>
+		<img id="image" />
+		<div
+			style="
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 1000px;
+			">
+			<div id="container" style="width: 130px; margin: 0 auto">
+				<button
+					id="button"
+					style="height: 100px; width: 200px; font-size: xx-large">
+					Click Me
+				</button>
+			</div>
+		</div>
+		<script>
+			const cats = {
+				codingCat:
+					"https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+				compilingCat:
+					"https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+				testingCat:
+					"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+			};
+			let btn = document.getElementById("button");
+			let image = document.getElementById("image");
+			btn.onclick = function () {
+				setInterval(() => {
+					randomCat = Math.floor(Math.random() * 3);
+					if (randomCat === 0) {
+						image.src = cats.codingCat;
+						image.style.width = "1000px";
+						btn.hidden = true;
+					} else if (randomCat === 1) {
+						image.src = cats.compilingCat;
+						image.style.width = "1000px";
+					} else {
+						image.src = cats.testingCat;
+						image.style.width = "1000px";
+					}
+				}, 1000);
+			};
+		</script>
+	</body>
+</html>
