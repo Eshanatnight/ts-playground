@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Cat Coding</title>
+		<script>
+			let btn = document.getElementById('button');
+			let image = document.getElementById('image');
+			btn.addEventListener('click', () => {
+				btn.innerHTML = "";
+				image.innerHTML = '<img src="${cats[cat]}" />';
+			});
+		</script>
+	</head>
+	<body>
+		<button id="button">Click Me</button>
+		<div id="image">
+		<img src="D:\Dev\ts-playground\AssignmentFour\vscode\catOne.gif" width=1000>
+		</div>
+	</body>
+	
+	</html>
