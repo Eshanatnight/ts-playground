@@ -1,0 +1,30 @@
+{
+	"name": "simple-web-workers",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc",
+		"clean": "rimraf decl && rimraf --glob *.js && rimraf --glob *.js.map",
+		"build_clean": "npm run clean && npm run build",
+		"serve": "npm run build && npx serve"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/knex": "^0.16.1",
+		"@types/sqlite3": "^3.1.8",
+		"@types/websql": "^0.0.27",
+		"knex": "^2.4.2",
+		"rimraf": "^5.0.0",
+		"serve": "^14.2.0",
+		"sqlite3": "^5.1.6",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.4",
+		"websql": "^2.0.3"
+	},
+	"dependencies": {
+		"requirejs": "^2.3.6"
+	}
+}
